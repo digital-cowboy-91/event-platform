@@ -1,10 +1,10 @@
 import { pgTable, varchar } from "drizzle-orm/pg-core";
-import { uuid } from "../column.helpers";
+import { id } from "../column.helpers";
 
 const usersTable = pgTable("users", {
-  ...uuid,
-  firstName: varchar().notNull(),
-  lastName: varchar().notNull(),
+  ...id,
+  firstName: varchar("first_name").notNull(),
+  lastName: varchar("last_name").notNull(),
 });
 
 export default usersTable;

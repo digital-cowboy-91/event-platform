@@ -6,9 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:generate": "dotenvx run --env-file=.env.local drizzle-kit generate",
+    "db:migrate": "dotenvx run --env-file=.env.local drizzle-kit migrate"
   },
   "dependencies": {
+    "@dotenvx/dotenvx": "^1.40.0",
     "drizzle-orm": "^0.42.0",
     "next": "15.3.0",
     "postgres": "^3.4.5",

@@ -1,15 +1,12 @@
-import { timestamp, varchar } from "drizzle-orm/pg-core";
+import { timestamp, uuid } from "drizzle-orm/pg-core";
 
-const uuid = {
-  id: varchar()
-    .primaryKey()
-    .unique()
-    .$defaultFn(() => crypto.randomUUID()),
+const id = {
+  id: uuid().defaultRandom().primaryKey(),
 };
 
 const timestamps = {
-  updatedAt: timestamp(),
-  createdAt: timestamp().defaultNow().notNull(),
+  updatedAt: timestamp("updated_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 };
 
-export { timestamps, uuid };
+export { id, timestamps };
