@@ -9,6 +9,6 @@ if (!DATABASE_URL) {
 
 // Disable prefetch as it is not supported for "Transaction" pool mode
 const client = postgres(DATABASE_URL, { prepare: false });
-const db = drizzle({ client });
+const db = drizzle({ client, casing: "snake_case" });
 
 export default db;
