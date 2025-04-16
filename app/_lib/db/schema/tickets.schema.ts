@@ -6,7 +6,7 @@ import usersTable from "./users.schema";
 const ticketsTable = pgTable("attendees", {
   ...uuid,
   eventId: varchar().references(() => eventsTable.id),
-  userId: varchar().references(() => usersTable.id),
+  userId: varchar().references(() => usersTable.id, { onDelete: "cascade" }),
   createdAt: timestamps.createdAt,
 });
 
