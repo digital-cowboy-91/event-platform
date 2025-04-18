@@ -1,3 +1,3 @@
 export default function Home() {
-  return <div> Hello Event Platform</div>;
+  return <div>TODO: Root</div>;
 }
