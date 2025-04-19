@@ -1,7 +1,9 @@
-import { Section } from "@radix-ui/themes";
+import { Theme } from "@radix-ui/themes";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Header from "./_components/Header";
+
+import "@radix-ui/themes/styles.css";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -29,10 +31,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Section size="1">
+        <Theme>
           <Header />
           <main>{children}</main>
-        </Section>
+        </Theme>
       </body>
     </html>
   );
