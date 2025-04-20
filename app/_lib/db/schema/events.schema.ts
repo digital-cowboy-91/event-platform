@@ -19,4 +19,8 @@ const eventsTable = pgTable("events", {
   price: integer().default(0),
 });
 
+type EventRecord = typeof eventsTable.$inferSelect;
+type EventId = EventRecord["id"];
+
 export default eventsTable;
+export type { EventId, EventRecord };

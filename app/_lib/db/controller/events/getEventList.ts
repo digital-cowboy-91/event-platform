@@ -1,9 +1,14 @@
-import { unstable_cache } from "next/cache";
+import { cacheLife } from "next/dist/server/use-cache/cache-life";
+import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import readEventList from "../../model/events/readEventList";
 import response from "../response.helper";
 
-const getEventList = () =>
-  response(async (signalError) => {
+const getEventList = async () => {
+  "use cache";
+  cacheTag("events", "event:list");
+  cacheLife("hours");
+
+  return response(async (signalError) => {
     const res = await readEventList();
 
     if (res.length === 0) signalError();
@@ -12,20 +17,12 @@ const getEventList = () =>
       events: res,
     };
   });
-
-const getCachedEventList = unstable_cache(
-  () => getEventList(),
-  ["events", "list"],
-  {
-    revalidate: 60,
-    tags: ["events", "list"],
-  }
-);
+};
 
 type EventListItem = Extract<
-  Awaited<ReturnType<typeof getCachedEventList>>,
+  Awaited<ReturnType<typeof getEventList>>,
   { success: true }
 >["events"][0];
 
-export default getCachedEventList;
+export default getEventList;
 export type { EventListItem };

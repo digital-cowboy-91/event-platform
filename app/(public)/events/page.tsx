@@ -1,8 +1,12 @@
 import EventList from "@/app/_components/event/EventList";
-import getCachedEventList from "@/app/_lib/db/controller/events/getEventList";
+import getEventList from "@/app/_lib/db/controller/events/getEventList";
 
 export default async function page() {
-  const res = await getCachedEventList();
+  // TODO: pagination
+  // TODO: handle empty array
+  // TODO: handle exceptions
+
+  const res = await getEventList();
 
   if (!res.success) {
     return <div>{JSON.stringify(res)}</div>;
