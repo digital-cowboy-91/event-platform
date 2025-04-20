@@ -37,7 +37,12 @@ const seedDatabase = async () => {
         count: 15,
         columns: {
           title: mock.companyName(),
-          description: mock.loremIpsum(),
+          description: mock.weightedRandom([
+            { weight: 0.3, value: mock.loremIpsum({ sentencesCount: 10 }) },
+            { weight: 0.3, value: mock.loremIpsum({ sentencesCount: 15 }) },
+            { weight: 0.3, value: mock.loremIpsum({ sentencesCount: 20 }) },
+            { weight: 0.1, value: mock.loremIpsum({ sentencesCount: 5 }) },
+          ]),
           location: mock.city(),
           startTime: mock.datetime(),
           updatedAt: mock.default({ defaultValue: null }),
@@ -49,7 +54,7 @@ const seedDatabase = async () => {
             { weight: 0.4, value: mock.default({ defaultValue: 0 }) },
           ]),
           coverImage: mock.default({
-            defaultValue: "https://placehold.co/1200x800/png",
+            defaultValue: null,
           }),
         },
       },
@@ -64,6 +69,8 @@ const seedDatabase = async () => {
   const shouldSkip = (pct: number) => Math.random() < pct;
 
   for (const event of events) {
+    const values = [];
+
     if (shouldSkip(0.2)) {
       continue;
     }
@@ -74,11 +81,13 @@ const seedDatabase = async () => {
       }
 
       const user = users[Math.floor(Math.random() * users.length)];
-      await db.insert(ticketsTable).values({
+      values.push({
         eventId: event.id,
         userId: user.id,
       });
     }
+
+    await db.insert(ticketsTable).values(values);
   }
 
   console.log("Database seeded!");

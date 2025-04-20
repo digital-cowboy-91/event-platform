@@ -17,9 +17,7 @@ const eventsTable = pgTable("events", {
   duration: integer().notNull().default(60),
   capacity: integer().default(0),
   price: integer().default(0),
-  coverImage: varchar("cover_image")
-    .notNull()
-    .default("https://placehold.co/1200x800/png"),
+  coverImage: varchar("cover_image"),
 });
 
 type EventRecord = typeof eventsTable.$inferSelect;

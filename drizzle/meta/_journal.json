@@ -36,6 +36,13 @@
       "when": 1745156073480,
       "tag": "0004_flashy_machine_man",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1745172057556,
+      "tag": "0005_lush_sunspot",
+      "breakpoints": true
     }
   ]
 }

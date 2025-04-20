@@ -20,7 +20,10 @@ export default function EventCard({ event }: Props) {
               position={"relative"}
             >
               <Image
-                src={event.coverImage}
+                src={
+                  event.coverImage ??
+                  "https://placehold.co/1200x800/png?text=NO+IMAGE"
+                }
                 className="object-cover"
                 alt=""
                 fill

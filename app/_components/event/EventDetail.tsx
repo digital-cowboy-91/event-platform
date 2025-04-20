@@ -8,16 +8,25 @@ interface Props {
 
 export default function EventDetail({ event }: Props) {
   return (
-    <Flex direction={"column"} gap={"3"}>
-      <Heading>{event.title}</Heading>
+    <Flex direction={"column"} gap={"6"}>
       <Box
         width={"100%"}
         overflow={"hidden"}
         className="aspect-16/9"
         position={"relative"}
+        style={{ borderRadius: "var(--radius-6)" }}
       >
-        <Image src={event.coverImage} className="object-cover" alt="" fill />
+        <Image
+          src={
+            event.coverImage ??
+            "https://placehold.co/1200x800/png?text=NO+IMAGE"
+          }
+          className="object-cover"
+          alt=""
+          fill
+        />
       </Box>
+      <Heading>{event.title}</Heading>
       <Text as="p">{event.description}</Text>
       <Card>
         <Flex direction={"column"}>
