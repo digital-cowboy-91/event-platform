@@ -1,0 +1,1 @@
+ALTER TABLE "events" ADD COLUMN "coverImage" varchar DEFAULT 'https://placehold.co/600x400' NOT NULL;

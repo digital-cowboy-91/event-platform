@@ -1,5 +1,6 @@
 import { EventItem } from "@/app/_lib/db/controller/events/getEvent";
 import { Box, Card, Flex, Heading, Text } from "@radix-ui/themes";
+import Image from "next/image";
 
 interface Props {
   event: EventItem;
@@ -9,7 +10,14 @@ export default function EventDetail({ event }: Props) {
   return (
     <Flex direction={"column"} gap={"3"}>
       <Heading>{event.title}</Heading>
-      <Box>Image placeholder</Box>
+      <Box
+        width={"100%"}
+        overflow={"hidden"}
+        className="aspect-16/9"
+        position={"relative"}
+      >
+        <Image src={event.coverImage} className="object-cover" alt="" fill />
+      </Box>
       <Text as="p">{event.description}</Text>
       <Card>
         <Flex direction={"column"}>

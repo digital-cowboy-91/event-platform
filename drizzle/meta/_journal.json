@@ -22,6 +22,20 @@
       "when": 1744813482866,
       "tag": "0002_right_makkari",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1745155992709,
+      "tag": "0003_clear_terrax",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1745156073480,
+      "tag": "0004_flashy_machine_man",
+      "breakpoints": true
     }
   ]
 }

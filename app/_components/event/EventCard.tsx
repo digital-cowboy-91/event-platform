@@ -1,5 +1,6 @@
 import { EventListItem } from "@/app/_lib/db/controller/events/getEventList";
-import { Box, Card, Flex, Text } from "@radix-ui/themes";
+import { Box, Card, Flex, Inset, Text } from "@radix-ui/themes";
+import Image from "next/image";
 import Link from "next/link";
 
 interface Props {
@@ -11,6 +12,22 @@ export default function EventCard({ event }: Props) {
     <Box minWidth={"350px"}>
       <Card asChild>
         <Link href={`/events/${event.id}`}>
+          <Inset clip="padding-box" side="top" pb="current">
+            <Box
+              width={"100%"}
+              overflow={"hidden"}
+              className="aspect-16/9"
+              position={"relative"}
+            >
+              <Image
+                src={event.coverImage}
+                className="object-cover"
+                alt=""
+                fill
+              />
+            </Box>
+          </Inset>
+
           <Flex direction="column" justify="between" gap="3">
             <Text weight="bold" size="4">
               {event.title}

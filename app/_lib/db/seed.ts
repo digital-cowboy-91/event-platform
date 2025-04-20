@@ -4,6 +4,8 @@ import eventsTable from "./schema/events.schema";
 import ticketsTable from "./schema/tickets.schema";
 import usersTable from "./schema/users.schema";
 
+// TODO: Change seeding to Faker
+
 const seedDatabase = async () => {
   const schema = {
     users: usersTable,
@@ -46,6 +48,9 @@ const seedDatabase = async () => {
             { weight: 0.6, value: mock.valuesFromArray({ values: price }) },
             { weight: 0.4, value: mock.default({ defaultValue: 0 }) },
           ]),
+          coverImage: mock.default({
+            defaultValue: "https://placehold.co/1200x800/png",
+          }),
         },
       },
     }))
