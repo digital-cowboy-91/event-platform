@@ -10,7 +10,7 @@ const signalError = () => {
 type TSignalError = typeof signalError;
 type TCallback<T> = (signalError: TSignalError) => T;
 
-const response = async <T>(cb: TCallback<T>): Promise<TError | TSuccess<T>> => {
+const unires = async <T>(cb: TCallback<T>): Promise<TError | TSuccess<T>> => {
   try {
     return {
       success: true,
@@ -24,4 +24,4 @@ const response = async <T>(cb: TCallback<T>): Promise<TError | TSuccess<T>> => {
   }
 };
 
-export default response;
+export default unires;

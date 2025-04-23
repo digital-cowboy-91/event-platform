@@ -1,5 +1,5 @@
 import { pgTable, uuid } from "drizzle-orm/pg-core";
-import { id, timestamps } from "../utils/columnHelper";
+import { id, timestamps } from "./column.helper";
 import eventsTable from "./events.schema";
 import usersTable from "./users.schema";
 

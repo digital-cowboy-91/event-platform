@@ -1,18 +1,24 @@
 "use server";
 
 import createServerClient from "../../supabase/utils/createServerClient";
+import unires from "../../unires/unires";
 import {
   SignInWithEmail,
   SignInWithEmailSchema,
 } from "./signInWithEmail.schema";
 
-async function signInWithEmail(creds: SignInWithEmail) {
-  const supabase = await createServerClient();
-  const parsedCreds = SignInWithEmailSchema.parse(creds);
+const signInWithEmail = async (creds: SignInWithEmail) =>
+  unires(async (signalError) => {
+    const supabase = await createServerClient();
+    const parsedCreds = SignInWithEmailSchema.parse(creds);
 
-  console.log("signInWithEmail", { creds, parsedCreds });
+    const { error } = await supabase.auth.signInWithPassword(parsedCreds);
 
-  return await supabase.auth.signInWithPassword(parsedCreds);
-}
+    if (error) {
+      return signalError();
+    }
+
+    return {};
+  });
 
 export default signInWithEmail;

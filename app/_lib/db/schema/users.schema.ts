@@ -1,5 +1,5 @@
 import { pgTable, varchar } from "drizzle-orm/pg-core";
-import { id } from "../utils/columnHelper";
+import { id } from "./column.helper";
 
 const usersTable = pgTable("users", {
   ...id,

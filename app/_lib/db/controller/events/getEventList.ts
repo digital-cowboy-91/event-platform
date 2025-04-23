@@ -1,14 +1,14 @@
 import { cacheLife } from "next/dist/server/use-cache/cache-life";
 import { cacheTag } from "next/dist/server/use-cache/cache-tag";
+import unires from "../../../unires/unires";
 import readEventList from "../../model/events/readEventList";
-import response from "../../utils/responseHelper";
 
 const getEventList = async () => {
   "use cache";
   cacheTag("events", "event:list");
   cacheLife("hours");
 
-  return response(async (signalError) => {
+  return unires(async (signalError) => {
     const res = await readEventList();
 
     if (res.length === 0) signalError();
