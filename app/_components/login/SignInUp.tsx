@@ -6,11 +6,13 @@ import signUpWithEmail from "@/app/_lib/auth/controller/signUpWithEmail.action";
 import { SignUpWithEmailSchema } from "@/app/_lib/auth/controller/signUpWithEmail.schema";
 import { Button, Flex, Heading, TextField } from "@radix-ui/themes";
 import { useForm } from "@tanstack/react-form";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import InputError from "../form/InputError";
 
 export default function SignInUp() {
   const [newUser, setNewUser] = useState(false);
+  const router = useRouter();
 
   const config = useMemo(
     () =>
@@ -18,36 +20,48 @@ export default function SignInUp() {
         ? {
             isNew: true,
             title: "Sign Up",
-            defaultValues: {
-              email: "",
-              password: "",
-              confirmPassword: "",
-            },
-            validator: SignUpWithEmailSchema,
-            submitFn: signUpWithEmail,
             modeLabel: "I already have an account",
             submitLabel: "Sign Up",
+            form: {
+              defaultValues: {
+                email: "",
+                password: "",
+                confirmPassword: "",
+              },
+              validator: SignUpWithEmailSchema,
+              submitFn: signUpWithEmail,
+            },
           }
         : {
             isNew: false,
             title: "Sign In",
-            defaultValues: {
-              email: "",
-              password: "",
-            },
-            validator: SignInWithEmailSchema,
-            submitFn: signInWithEmail,
             modeLabel: "I am new here",
             submitLabel: "Sign In",
+            form: {
+              defaultValues: {
+                email: "",
+                password: "",
+              },
+              validator: SignInWithEmailSchema,
+              submitFn: signInWithEmail,
+            },
           },
     [newUser]
   );
 
   const form = useForm({
-    defaultValues: config.defaultValues,
-    validators: { onSubmit: config.validator },
+    defaultValues: config.form.defaultValues,
+    validators: { onSubmit: config.form.validator },
     onSubmit: async ({ value }) => {
-      config.submitFn(value).then((res) => console.log({ res }));
+      config.form.submitFn(value).then(({ success }) => {
+        console.log("SignInUp", "onSubmit", { value, success });
+
+        if (!success) {
+          return;
+        }
+
+        router.replace("/my");
+      });
     },
   });
 
