@@ -1,4 +1,4 @@
-import seedDatabase from "@/app/_lib/db/seed";
+import seedDatabase from "@/app/_lib/db/utils/seedDatabase";
 
 export async function GET() {
   try {

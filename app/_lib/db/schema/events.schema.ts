@@ -5,7 +5,7 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
-import { id, timestamps } from "./column.helpers";
+import { id, timestamps } from "../utils/columnHelper";
 
 const eventsTable = pgTable("events", {
   ...id,

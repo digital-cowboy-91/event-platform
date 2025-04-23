@@ -1,8 +1,8 @@
 import { reset, seed } from "drizzle-seed";
-import db from "./db.instance";
-import eventsTable from "./schema/events.schema";
-import ticketsTable from "./schema/tickets.schema";
-import usersTable from "./schema/users.schema";
+import db from "../instance";
+import eventsTable from "../schema/events.schema";
+import ticketsTable from "../schema/tickets.schema";
+import usersTable from "../schema/users.schema";
 
 // TODO: Change seeding to Faker
 

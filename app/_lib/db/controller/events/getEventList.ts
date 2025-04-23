@@ -1,7 +1,7 @@
 import { cacheLife } from "next/dist/server/use-cache/cache-life";
 import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import readEventList from "../../model/events/readEventList";
-import response from "../response.helper";
+import response from "../../utils/responseHelper";
 
 const getEventList = async () => {
   "use cache";
