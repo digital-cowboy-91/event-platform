@@ -1,4 +1,5 @@
 import { Flex, Text } from "@radix-ui/themes";
+import { Suspense } from "react";
 import Sidebar from "./sidebar/Sidebar";
 
 export default function Header() {
@@ -6,7 +7,9 @@ export default function Header() {
     <header>
       <Flex justify={"between"}>
         <Text>TODO: Header</Text>
-        <Sidebar />
+        <Suspense>
+          <Sidebar />
+        </Suspense>
       </Flex>
     </header>
   );

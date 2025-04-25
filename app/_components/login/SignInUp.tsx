@@ -6,13 +6,14 @@ import signUpWithEmail from "@/app/_lib/auth/controller/signUpWithEmail.action";
 import { SignUpWithEmailSchema } from "@/app/_lib/auth/controller/signUpWithEmail.schema";
 import { Button, Flex, Heading, TextField } from "@radix-ui/themes";
 import { useForm } from "@tanstack/react-form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import InputError from "../form/InputError";
 
 export default function SignInUp() {
   const [newUser, setNewUser] = useState(false);
   const router = useRouter();
+  const redirect = useSearchParams().get("redirect");
 
   const config = useMemo(
     () =>
@@ -60,7 +61,7 @@ export default function SignInUp() {
           return;
         }
 
-        router.replace("/my");
+        router.replace(redirect ? redirect : "/my");
       });
     },
   });
@@ -75,7 +76,6 @@ export default function SignInUp() {
     >
       <Flex gap={"3"} direction={"column"}>
         <Heading mb="6">{config.title}</Heading>
-
         <form.Field
           name="email"
           children={(field) => (
