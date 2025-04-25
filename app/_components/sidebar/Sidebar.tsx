@@ -3,6 +3,7 @@ import { PersonIcon } from "@radix-ui/react-icons";
 import { Avatar, VisuallyHidden } from "@radix-ui/themes";
 import Link from "next/link";
 import { Dialog } from "radix-ui";
+import CMSMenu from "./CMSMenu";
 import SessionButton from "./SessionButton";
 import UserMenu from "./UserMenu";
 
@@ -34,6 +35,7 @@ export default async function Sidebar() {
             </VisuallyHidden>
             <SessionButton email={user?.email} />
             <UserMenu />
+            <CMSMenu />
           </aside>
         </Dialog.Content>
       </Dialog.Portal>
