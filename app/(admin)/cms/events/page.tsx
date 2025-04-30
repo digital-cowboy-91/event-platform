@@ -1,4 +1,4 @@
-import EventTable from "@/app/_components/table/EventTable";
+import EventTable from "@/app/_components/_cms/event/EventTable";
 import getEventList from "@/app/_lib/db/controller/events/getEventList";
 
 export default async function page() {
