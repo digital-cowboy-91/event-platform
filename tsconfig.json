@@ -27,7 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/_lib/storage/controller/imageUpload.schema.ts"
+    "app/_lib/storage/controller/uploadImage.schema.ts"
   ],
   "exclude": ["node_modules"]
 }

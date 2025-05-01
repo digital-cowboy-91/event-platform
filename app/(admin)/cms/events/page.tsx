@@ -1,5 +1,5 @@
 import EventTable from "@/app/_components/_cms/event/EventTable";
-import getEventList from "@/app/_lib/db/controller/events/getEventList";
+import getEventList from "@/app/_lib/db/controller/events/readEventList";
 
 export default async function page() {
   const res = await getEventList();

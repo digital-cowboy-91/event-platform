@@ -1,4 +1,4 @@
-import { EventListItem } from "@/app/_lib/db/controller/events/getEventList";
+import { EventListItem } from "@/app/_lib/db/controller/events/readEventList";
 import { Box, Card, Flex, Inset, Text } from "@radix-ui/themes";
 import Image from "next/image";
 import Link from "next/link";

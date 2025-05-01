@@ -1,9 +1,12 @@
 "use client";
 
-import postEvent from "@/app/_lib/db/controller/events/postEvent.action";
+import createEvent from "@/app/_lib/db/controller/events/createEvent.action";
+import deleteEvent from "@/app/_lib/db/controller/events/deleteEvent.action";
+import updateEvent from "@/app/_lib/db/controller/events/updateEvent.action";
 import {
   EventFormDefaultSchema,
   EventFormValidationSchema,
+  EventId,
   EventRecord,
 } from "@/app/_lib/db/schema/events.schema";
 import { Button, Flex, Text, TextArea, TextField } from "@radix-ui/themes";
@@ -11,6 +14,7 @@ import { useForm } from "@tanstack/react-form";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 import { Label } from "radix-ui";
+import { useCallback, useState } from "react";
 import ImageUploader from "../../form/ImageUploader";
 import InputError from "../../form/InputError";
 
@@ -20,19 +24,37 @@ interface Props {
 
 export default function EventForm({ modify }: Props) {
   const router = useRouter();
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const form = useForm({
     defaultValues: EventFormDefaultSchema.safeParse(modify ?? {}).data,
     validators: {
       onSubmit: EventFormValidationSchema,
     },
     onSubmit: async ({ value }) => {
-      const res = await postEvent(value);
-
-      if (res.success) {
-        router.replace(`/cms/events/${res.event.id}`);
+      if (modify?.id) {
+        const res = await updateEvent(modify.id, value);
+        if (res.success) router.refresh();
+        return;
       }
+
+      const res = await createEvent(value);
+      if (res.success) router.replace(`/cms/events/${res.event.id}`);
     },
   });
+
+  const handleDelete = useCallback(
+    async (id: EventId) => {
+      try {
+        setIsDeleting(true);
+        const res = await deleteEvent(id);
+        if (res.success) router.replace("/cms/events");
+      } catch (e) {
+        setIsDeleting(false);
+      }
+    },
+    [router]
+  );
 
   return (
     <Flex direction="column" gap="3" asChild>
@@ -168,8 +190,18 @@ export default function EventForm({ modify }: Props) {
             </>
           )}
         />
-        <Flex>
-          <Button disabled={form.state.isSubmitting}>Save</Button>
+        <Flex justify={"between"}>
+          {modify?.id && (
+            <Button
+              variant="soft"
+              color="crimson"
+              onClick={() => handleDelete(modify.id)}
+              disabled={isDeleting || form.state.isSubmitting}
+            >
+              Delete
+            </Button>
+          )}
+          <Button disabled={isDeleting || form.state.isSubmitting}>Save</Button>
         </Flex>
       </form>
     </Flex>

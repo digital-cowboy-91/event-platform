@@ -1,7 +1,7 @@
 import { cacheLife } from "next/dist/server/use-cache/cache-life";
 import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import unires from "../../../unires/unires";
-import readEvent from "../../model/events/readEvent";
+import selectEventById from "../../model/events/selectEventById";
 import { EventId } from "../../schema/events.schema";
 
 interface Args {
@@ -14,9 +14,9 @@ const getEvent = async ({ id }: Args) => {
   cacheLife("hours");
 
   return unires(async (signalError) => {
-    const res = await readEvent(id).then((res) => res[0]);
+    const res = await selectEventById(id).then((res) => res[0]);
 
-    if (!res) signalError();
+    if (!res) signalError({ message: "Invalid Event ID" });
 
     return { event: res };
   });

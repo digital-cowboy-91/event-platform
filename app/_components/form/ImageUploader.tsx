@@ -1,5 +1,6 @@
-import imageUpload from "@/app/_lib/storage/controller/imageUpload.action";
-import ImageUploadSchema from "@/app/_lib/storage/controller/imageUpload.schema";
+import imageUpload from "@/app/_lib/storage/controller/uploadImage.action";
+import UploadImageSchema from "@/app/_lib/storage/controller/uploadImage.schema";
+import getEnvVars from "@/app/_lib/supabase/utils/getEnvVars";
 import { Box, Flex, Text } from "@radix-ui/themes";
 import { Label } from "radix-ui";
 import { ChangeEvent, useCallback, useState } from "react";
@@ -7,6 +8,7 @@ import { ZodError } from "zod";
 import InputError from "./InputError";
 
 // TODO: Handle selection of existing images
+// TODO: Create media table to store img references with additional metadata like alt text
 
 interface Props {
   label: string;
@@ -22,7 +24,7 @@ export default function ImageUploader({ label, value, onChange }: Props) {
   const handleChange = useCallback(
     async (imgEvent: ChangeEvent<HTMLInputElement>) => {
       try {
-        const file = ImageUploadSchema.parse(imgEvent.target.files?.[0]);
+        const file = UploadImageSchema.parse(imgEvent.target.files?.[0]);
 
         const reader = new FileReader();
 
@@ -32,13 +34,11 @@ export default function ImageUploader({ label, value, onChange }: Props) {
 
         const res = await imageUpload(file, "/events/covers");
 
-        console.log({ res });
-
         if (!res.success) {
           throw res.error;
         }
 
-        onChange(res.storage.path);
+        onChange(res.storage.fullPath);
       } catch (e) {
         setImgProps(generateImgProps(null));
         onChange("");
@@ -104,7 +104,10 @@ function generateImgProps(src?: string | ArrayBuffer | null) {
   const _src = typeof src === "string" && src.length > 0 ? src : null;
   return _src
     ? {
-        src: _src,
+        src:
+          _src.startsWith("data:image") || _src.startsWith("http")
+            ? _src
+            : getEnvVars().SUPABASE_URL + "/storage/v1/object/public/" + _src,
         alt: "Preview of uploaded image",
         style: { display: "block" },
         hidden: false,

@@ -5,7 +5,9 @@ import usersTable from "./users.schema";
 
 const ticketsTable = pgTable("tickets", {
   ...id,
-  eventId: uuid("event_id").references(() => eventsTable.id),
+  eventId: uuid("event_id").references(() => eventsTable.id, {
+    onDelete: "cascade",
+  }),
   userId: uuid("user_id").references(() => usersTable.id, {
     onDelete: "cascade",
   }),

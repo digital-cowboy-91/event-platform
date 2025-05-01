@@ -55,8 +55,6 @@ export default function SignInUp() {
     validators: { onSubmit: config.form.validator },
     onSubmit: async ({ value }) => {
       config.form.submitFn(value).then(({ success }) => {
-        console.log("SignInUp", "onSubmit", { value, success });
-
         if (!success) {
           return;
         }

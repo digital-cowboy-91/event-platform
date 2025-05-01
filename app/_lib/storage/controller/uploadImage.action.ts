@@ -3,11 +3,15 @@
 import createServerClient from "../../supabase/utils/createServerClient";
 import getEnvVars from "../../supabase/utils/getEnvVars";
 import unires from "../../unires/unires";
-import ImageUploadSchema from "./imageUpload.schema.ts";
+import ImageUploadSchema from "./uploadImage.schema";
 
 const PUBLIC_BUCKET = getEnvVars().SUPABASE_PUBLIC_BUCKET;
 
-const uploadImage = async (file: File, path: string) =>
+const uploadImage = async (
+  file: File,
+  path: string
+  // uploadToPrivateBucket: boolean = false
+) =>
   unires(async (signalError) => {
     const _file = ImageUploadSchema.safeParse(file);
 

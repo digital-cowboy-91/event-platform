@@ -1,7 +1,7 @@
 import { cacheLife } from "next/dist/server/use-cache/cache-life";
 import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import unires from "../../../unires/unires";
-import readEventList from "../../model/events/readEventList";
+import selectEventList from "../../model/events/selectEventList";
 
 const getEventList = async () => {
   "use cache";
@@ -9,9 +9,9 @@ const getEventList = async () => {
   cacheLife("hours");
 
   return unires(async (signalError) => {
-    const res = await readEventList();
+    const res = await selectEventList();
 
-    if (res.length === 0) signalError();
+    if (res.length === 0) signalError({ message: "No events found" });
 
     return {
       events: res,

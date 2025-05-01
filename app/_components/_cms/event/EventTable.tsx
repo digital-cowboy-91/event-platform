@@ -1,6 +1,6 @@
 "use client";
 
-import { EventListItem } from "@/app/_lib/db/controller/events/getEventList";
+import { EventListItem } from "@/app/_lib/db/controller/events/readEventList";
 import { Button, Flex } from "@radix-ui/themes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

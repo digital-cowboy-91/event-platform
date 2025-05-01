@@ -3,7 +3,7 @@ import { z } from "zod";
 const MAX_UPLOAD_SIZE = 1024 * 1024 * 5;
 const ACCEPTED_FILE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
-const ImageUploadSchema = z
+const UploadImageSchema = z
   .instanceof(File)
   .refine(
     (file) => !file || file.size <= MAX_UPLOAD_SIZE,
@@ -14,4 +14,4 @@ const ImageUploadSchema = z
     "This file type is not allowed"
   );
 
-export default ImageUploadSchema;
+export default UploadImageSchema;
