@@ -8,7 +8,7 @@ interface Args {
   id: EventId;
 }
 
-const getEvent = async ({ id }: Args) => {
+const readEventById = async ({ id }: Args) => {
   "use cache";
   cacheTag("events", `event:${id}`);
   cacheLife("hours");
@@ -23,9 +23,9 @@ const getEvent = async ({ id }: Args) => {
 };
 
 type EventItem = Extract<
-  Awaited<ReturnType<typeof getEvent>>,
+  Awaited<ReturnType<typeof readEventById>>,
   { success: true }
 >["event"];
 
-export default getEvent;
+export default readEventById;
 export type { EventItem };

@@ -3,7 +3,7 @@ import { cacheTag } from "next/dist/server/use-cache/cache-tag";
 import unires from "../../../unires/unires";
 import selectEventList from "../../model/events/selectEventList";
 
-const getEventList = async () => {
+const readEventList = async () => {
   "use cache";
   cacheTag("events", "event:list");
   cacheLife("hours");
@@ -20,9 +20,9 @@ const getEventList = async () => {
 };
 
 type EventListItem = Extract<
-  Awaited<ReturnType<typeof getEventList>>,
+  Awaited<ReturnType<typeof readEventList>>,
   { success: true }
 >["events"][0];
 
-export default getEventList;
+export default readEventList;
 export type { EventListItem };

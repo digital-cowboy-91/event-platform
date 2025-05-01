@@ -8,7 +8,7 @@ interface Props {
 export default async function page({ params }: Props) {
   const { event_id } = await params;
   const res = await getEvent({ id: event_id });
-
+  console.log(res);
   if (!res.success) {
     return <div>{JSON.stringify(res)}</div>;
   }
