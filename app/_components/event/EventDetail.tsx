@@ -1,5 +1,5 @@
 import { EventItem } from "@/app/_lib/db/controller/events/readEventById";
-import { Box, Card, Flex, Heading, Text } from "@radix-ui/themes";
+import { Box, Button, Card, Flex, Heading, Text } from "@radix-ui/themes";
 import Image from "next/image";
 
 interface Props {
@@ -32,6 +32,12 @@ export default function EventDetail({ event }: Props) {
           <Text>Attendance 0/{event.capacity}, 0 considering</Text>
         </Flex>
       </Card>
+      <Flex justify={"end"} gap={"3"}>
+        <Button variant="outline">Download Event</Button>
+        <Button>
+          Get Ticket for {event.price === 0 ? "Free" : "£" + event.price}
+        </Button>
+      </Flex>
     </Flex>
   );
 }

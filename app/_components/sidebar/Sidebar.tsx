@@ -25,7 +25,7 @@ export default async function Sidebar() {
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/50" />
         <Dialog.Content
-          className="fixed right-0 inset-y-0 w-1/3 bg-white"
+          className="fixed right-0 inset-y-0 min-w-80 bg-white"
           asChild
           aria-describedby={undefined}
         >
