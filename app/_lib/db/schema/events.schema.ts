@@ -5,7 +5,6 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 import { id, timestamps } from "./column.helper";
 
@@ -23,22 +22,36 @@ const eventsTable = pgTable("events", {
 });
 
 type EventRecord = typeof eventsTable.$inferSelect;
-type EventInsertRecord = typeof eventsTable.$inferInsert;
 type EventId = EventRecord["id"];
 
-const EventInsertSchema = createInsertSchema(eventsTable, {
-  title: (s) => s.min(3),
-  description: (s) => s.nonempty(),
-  location: (s) => s.nonempty(),
-  startTime: z.coerce.date().min(new Date()),
-  duration: (s) => s.positive(),
-  capacity: (s) => s.nonnegative(),
-  price: (s) => s.nonnegative(),
-  coverImage: (s) => s.nonempty(),
-}).omit({ id: true, createdAt: true, updatedAt: true });
+const EventFormDefaultSchema = z.object({
+  title: z.string().default(""),
+  description: z.string().default(""),
+  location: z.string().default(""),
+  startTime: z.date().default(new Date()),
+  duration: z.number().default(60),
+  capacity: z.number().default(0),
+  price: z.number().default(0),
+  coverImage: z
+    .string()
+    .or(z.null())
+    .transform((val) => val ?? "")
+    .default(""),
+});
 
-type EventInsert = z.infer<typeof EventInsertSchema>;
+const EventFormValidationSchema = EventFormDefaultSchema.extend({
+  title: z.string().min(3),
+  description: z.string().nonempty(),
+  location: z.string().nonempty(),
+  startTime: z.date(),
+  duration: z.number().positive(),
+  capacity: z.number().nonnegative(),
+  price: z.number().nonnegative(),
+  coverImage: z.string().nonempty({ message: "Image is required" }),
+});
+
+type EventInsertRecord = z.infer<typeof EventFormDefaultSchema>;
 
 export default eventsTable;
-export { EventInsertSchema };
-export type { EventId, EventInsert, EventInsertRecord, EventRecord };
+export { EventFormDefaultSchema, EventFormValidationSchema };
+export type { EventId, EventInsertRecord, EventRecord };

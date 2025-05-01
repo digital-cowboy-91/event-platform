@@ -6,6 +6,8 @@ import { ChangeEvent, useCallback, useState } from "react";
 import { ZodError } from "zod";
 import InputError from "./InputError";
 
+// TODO: Handle selection of existing images
+
 interface Props {
   label: string;
   value: string;

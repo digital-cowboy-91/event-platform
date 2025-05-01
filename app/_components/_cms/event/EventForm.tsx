@@ -2,7 +2,8 @@
 
 import postEvent from "@/app/_lib/db/controller/events/postEvent.action";
 import {
-  EventInsertSchema,
+  EventFormDefaultSchema,
+  EventFormValidationSchema,
   EventRecord,
 } from "@/app/_lib/db/schema/events.schema";
 import { Button, Flex, Text, TextArea, TextField } from "@radix-ui/themes";
@@ -20,18 +21,9 @@ interface Props {
 export default function EventForm({ modify }: Props) {
   const router = useRouter();
   const form = useForm({
-    defaultValues: {
-      title: modify?.title ?? "",
-      description: modify?.description ?? "",
-      location: modify?.location ?? "",
-      startTime: getDateTimeForInput(modify?.startTime ?? ""),
-      duration: modify?.duration ?? 60,
-      capacity: modify?.capacity ?? 0,
-      price: modify?.price ?? 0,
-      coverImage: modify?.coverImage ?? "",
-    },
+    defaultValues: EventFormDefaultSchema.safeParse(modify ?? {}).data,
     validators: {
-      onSubmit: EventInsertSchema,
+      onSubmit: EventFormValidationSchema,
     },
     onSubmit: async ({ value }) => {
       const res = await postEvent(value);
@@ -73,7 +65,7 @@ export default function EventForm({ modify }: Props) {
               <Label.Root>
                 <Text>Description</Text>
                 <TextArea
-                  value={field.state.value ?? ""}
+                  value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
                 />
               </Label.Root>
@@ -104,10 +96,11 @@ export default function EventForm({ modify }: Props) {
                 <Text>Date & Time</Text>
                 <TextField.Root
                   type="datetime-local"
-                  value={field.state.value}
-                  onChange={(e) =>
-                    field.handleChange(getDateTimeForInput(e.target.value))
-                  }
+                  value={format(field.state.value, "yyyy-MM-dd HH:mm").replace(
+                    " ",
+                    "T"
+                  )}
+                  onChange={(e) => field.handleChange(new Date(e.target.value))}
                 />
               </Label.Root>
               <InputError error={field.state.meta.errors[0]} />
@@ -181,17 +174,4 @@ export default function EventForm({ modify }: Props) {
       </form>
     </Flex>
   );
-}
-
-// Helpers
-function getDateTimeForInput(date: string | Date) {
-  let _date = date;
-
-  if (typeof _date === "string") {
-    const ts = Date.parse(_date);
-    if (Number.isNaN(ts)) return _date;
-    _date = new Date(ts);
-  }
-
-  return format(_date, "yyyy-MM-dd HH:mm").replace(" ", "T");
 }
