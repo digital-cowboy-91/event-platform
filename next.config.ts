@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   experimental: {
     dynamicIO: true,
     useCache: true,
+    serverActions: {
+      bodySizeLimit: "5mb",
+    },
   },
   images: {
     dangerouslyAllowSVG: true,

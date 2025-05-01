@@ -26,27 +26,15 @@ type EventRecord = typeof eventsTable.$inferSelect;
 type EventInsertRecord = typeof eventsTable.$inferInsert;
 type EventId = EventRecord["id"];
 
-const MAX_UPLOAD_SIZE = 1024 * 1024 * 5;
-const ACCEPTED_FILE_TYPES = ["image/jpeg", "image/png", "image/webp"];
-
 const EventInsertSchema = createInsertSchema(eventsTable, {
   title: (s) => s.min(3),
-  description: z.string(),
-  location: z.string(),
+  description: (s) => s.nonempty(),
+  location: (s) => s.nonempty(),
   startTime: z.coerce.date().min(new Date()),
   duration: (s) => s.positive(),
   capacity: (s) => s.nonnegative(),
   price: (s) => s.nonnegative(),
-  coverImage: z
-    .instanceof(File)
-    .refine(
-      (file) => !file || file.size <= MAX_UPLOAD_SIZE,
-      "File size must be less than 5MB"
-    )
-    .refine(
-      (file) => ACCEPTED_FILE_TYPES.includes(file.type),
-      "This file type is not allowed"
-    ),
+  coverImage: (s) => s.nonempty(),
 }).omit({ id: true, createdAt: true, updatedAt: true });
 
 type EventInsert = z.infer<typeof EventInsertSchema>;

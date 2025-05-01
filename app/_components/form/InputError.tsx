@@ -1,7 +1,7 @@
 import { Text } from "@radix-ui/themes";
 
 interface Props {
-  error: { message: string } | undefined;
+  error: { message: string } | undefined | null;
 }
 
 export default function InputError({ error }: Props) {
