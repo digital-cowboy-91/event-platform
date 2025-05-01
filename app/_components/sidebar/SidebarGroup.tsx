@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Dialog } from "radix-ui";
 import { ReactElement, useMemo } from "react";
 import Icon from "../Icon";
 
@@ -73,7 +74,11 @@ export default function SidebarGroup({ title, items }: Props) {
             );
           } else return null;
 
-          return <li key={index}>{interactiveEl}</li>;
+          return (
+            <li key={index}>
+              <Dialog.Close asChild>{interactiveEl}</Dialog.Close>
+            </li>
+          );
         })}
       </ul>
     </figure>

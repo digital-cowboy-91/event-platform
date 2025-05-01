@@ -1,4 +1,4 @@
-import { Theme } from "@radix-ui/themes";
+import { Container, Theme } from "@radix-ui/themes";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Header from "./_components/Header";
@@ -33,7 +33,9 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <Header />
-          <main>{children}</main>
+          <Container asChild p={"3"}>
+            <main>{children}</main>
+          </Container>
         </body>
       </Theme>
     </html>

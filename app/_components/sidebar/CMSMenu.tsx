@@ -6,7 +6,7 @@ export default function CMSMenu() {
       title="CMS"
       items={[
         {
-          name: "TODO: Events",
+          name: "Events",
           href: "/cms/events",
           iconName: "streamline:blank-calendar",
         },
