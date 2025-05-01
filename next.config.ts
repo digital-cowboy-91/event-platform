@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import getEnvVars from "./app/_lib/supabase/utils/getEnvVars";
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -11,11 +12,12 @@ const nextConfig: NextConfig = {
   },
   images: {
     dangerouslyAllowSVG: true,
+
+    loader: "custom",
+    loaderFile: "./app/_lib/supabase/utils/publicImageLoader.ts",
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "placehold.co",
-      },
+      new URL("https://placehold.co/**"),
+      new URL(getEnvVars().SUPABASE_URL + "/storage/v1/object/public/media/**"),
     ],
   },
 };

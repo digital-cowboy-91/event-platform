@@ -1,3 +1,5 @@
+"use client";
+
 import { EventListItem } from "@/app/_lib/db/controller/events/readEventList";
 import { Box, Card, Flex, Inset, Text } from "@radix-ui/themes";
 import Image from "next/image";
@@ -20,10 +22,7 @@ export default function EventCard({ event }: Props) {
               position={"relative"}
             >
               <Image
-                src={
-                  event.coverImage ??
-                  "https://placehold.co/1200x800/png?text=NO+IMAGE"
-                }
+                src={event.coverImage ?? "#"}
                 className="object-cover"
                 alt=""
                 fill

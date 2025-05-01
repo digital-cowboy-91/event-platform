@@ -17,10 +17,7 @@ export default function EventDetail({ event }: Props) {
         style={{ borderRadius: "var(--radius-6)" }}
       >
         <Image
-          src={
-            event.coverImage ??
-            "https://placehold.co/1200x800/png?text=NO+IMAGE"
-          }
+          src={event.coverImage ?? "#"}
           className="object-cover"
           alt=""
           fill
