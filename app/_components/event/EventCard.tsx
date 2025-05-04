@@ -1,6 +1,7 @@
 "use client";
 
 import { EventListItem } from "@/app/_lib/db/controller/events/readEventList";
+import composeEventDateTime from "@/app/_lib/utils/composeEventDateTime";
 import { Box, Card, Flex, Inset, Text } from "@radix-ui/themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -35,20 +36,7 @@ export default function EventCard({ event }: Props) {
               {event.title}
             </Text>
             <Flex direction="column">
-              <Text>
-                {new Date(event.startTime).toLocaleDateString("en-GB", {
-                  weekday: "short",
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                })}{" "}
-                ∙{" "}
-                {new Date(event.startTime).toLocaleTimeString("en-GB", {
-                  hour12: true,
-                  hour: "numeric",
-                  minute: "numeric",
-                })}
-              </Text>
+              <Text>{composeEventDateTime(event.startTime)}</Text>
               <Text>{event.location}</Text>
             </Flex>
             <Text weight="regular">
