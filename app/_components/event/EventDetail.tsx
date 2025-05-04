@@ -1,6 +1,7 @@
 import { EventItem } from "@/app/_lib/db/controller/events/readEventById";
-import { Box, Button, Card, Flex, Heading, Text } from "@radix-ui/themes";
+import { Box, Card, Flex, Heading, Text } from "@radix-ui/themes";
 import Image from "next/image";
+import GetTicketDialog from "../tickets/get-ticket/GetTicketDialog";
 import IcsDownloadButton from "./IcsDownloadButton";
 
 interface Props {
@@ -35,9 +36,7 @@ export default function EventDetail({ event }: Props) {
       </Card>
       <Flex justify={"end"} gap={"3"}>
         <IcsDownloadButton eventId={event.id} />
-        <Button>
-          Get Ticket for {event.price === 0 ? "Free" : "£" + event.price}
-        </Button>
+        <GetTicketDialog eventId={event.id} price={event.price} />
       </Flex>
     </Flex>
   );

@@ -14,4 +14,8 @@ const ticketsTable = pgTable("tickets", {
   createdAt: timestamps.createdAt,
 });
 
+type TicketRecord = typeof ticketsTable.$inferSelect;
+type TicketInsertRecord = typeof ticketsTable.$inferInsert;
+
 export default ticketsTable;
+export type { TicketInsertRecord, TicketRecord };
