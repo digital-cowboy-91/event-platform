@@ -16,8 +16,6 @@ export default function SignInUp() {
   const router = useRouter();
   const redirect = useSearchParams().get("redirect");
 
-  console.log("rerender");
-
   const config = useMemo(
     () =>
       newUser
@@ -58,15 +56,14 @@ export default function SignInUp() {
   const form = useForm({
     defaultValues: config.form.defaultValues,
     validators: { onSubmit: config.form.validator },
-    onSubmit: async ({ value }) => {
+    onSubmit: async ({ value }) =>
       config.form.submitFn(value).then(({ success }) => {
         if (!success) {
           return;
         }
 
         router.replace(redirect ? redirect : "/my/profile");
-      });
-    },
+      }),
   });
 
   return (
@@ -158,10 +155,13 @@ export default function SignInUp() {
             variant="soft"
             onClick={() => setNewUser(!newUser)}
             type="button"
+            disabled={form.state.isSubmitting}
           >
             {config.modeLabel}
           </Button>
-          <Button>{config.submitLabel}</Button>
+          <Button disabled={form.state.isSubmitting}>
+            {config.submitLabel}
+          </Button>
         </Flex>
       </Flex>
     </form>
