@@ -1,7 +1,6 @@
 "use server";
 
 import unires from "@/app/_lib/unires/unires";
-import { revalidateTag } from "next/cache";
 import insertEvent from "../../model/events/insertEvent";
 import {
   EventFormValidationSchema,
@@ -15,8 +14,6 @@ const createEvent = async (record: EventInsertRecord) =>
     if (_record.error) return signalError(_record.error);
 
     const event = await insertEvent(_record.data);
-
-    revalidateTag("event:list");
 
     return {
       event: event[0],

@@ -1,34 +1,50 @@
 "use client";
 
+import dropCurrentProfile from "@/app/_lib/db/controller/profile/dropCurrentProfile";
+import patchCurrentProfile from "@/app/_lib/db/controller/profile/patchCurrentProfile";
 import {
   ProfileFormDefaultSchema,
   ProfileFormValidationSchema,
+  ProfileRecord,
 } from "@/app/_lib/db/schema/profile.schema";
 import { Button, Flex, Text, TextField } from "@radix-ui/themes";
 import { useForm } from "@tanstack/react-form";
+import { useRouter } from "next/navigation";
 import { Label } from "radix-ui";
 import InputError from "../form/InputError";
+import DeleteProfileDialog from "./DeleteProfileDialog";
 
-export default function ProfileForm() {
+type SubmitMeta = {
+  action: "update" | "delete" | null;
+};
+
+interface Props {
+  profileData: ProfileRecord;
+}
+
+export default function ProfileForm({ profileData }: Props) {
+  const router = useRouter();
+
   const form = useForm({
-    defaultValues: ProfileFormDefaultSchema.safeParse({}).data,
+    defaultValues: ProfileFormDefaultSchema.safeParse(profileData).data,
     validators: {
       onSubmit: ProfileFormValidationSchema,
     },
-    onSubmit: ({ value }) => {
-      console.log({ value });
+    onSubmitMeta: { action: "update" } as SubmitMeta,
+    onSubmit: async ({ value, meta }) => {
+      if (meta.action === "update") return patchCurrentProfile(value);
+      if (meta.action === "delete")
+        return dropCurrentProfile().then((res) => {
+          if (res.success) {
+            router.replace("/login");
+          }
+        });
     },
   });
 
   return (
     <Flex direction="column" gap="3" asChild>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          form.handleSubmit();
-        }}
-      >
+      <form onSubmit={(e) => e.preventDefault()}>
         <form.Field
           name="firstName"
           children={(field) => (
@@ -56,8 +72,17 @@ export default function ProfileForm() {
           )}
         />
         <Flex justify="between">
-          <Button>Delete</Button>
-          <Button>Save</Button>
+          <DeleteProfileDialog
+            onConfirm={() => form.handleSubmit({ action: "delete" })}
+            disabled={form.state.isSubmitting}
+          />
+
+          <Button
+            disabled={form.state.isSubmitting}
+            onClick={() => form.handleSubmit({ action: "update" })}
+          >
+            Save
+          </Button>
         </Flex>
       </form>
     </Flex>

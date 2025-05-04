@@ -4,8 +4,6 @@ import getEnvVars from "./app/_lib/supabase/utils/getEnvVars";
 const nextConfig: NextConfig = {
   /* config options here */
   experimental: {
-    dynamicIO: true,
-    useCache: true,
     serverActions: {
       bodySizeLimit: "5mb",
     },

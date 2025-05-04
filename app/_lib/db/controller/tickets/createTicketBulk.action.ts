@@ -1,7 +1,6 @@
 "use server";
 
 import unires from "@/app/_lib/unires/unires";
-import { revalidateTag } from "next/cache";
 import insertTicketBulk from "../../model/tickets/insertTicketBulk";
 
 const createTicketBulk = async (
@@ -16,8 +15,6 @@ const createTicketBulk = async (
     }));
 
     await insertTicketBulk(records);
-
-    revalidateTag("ticket:list:" + userId);
 
     return {};
   });
