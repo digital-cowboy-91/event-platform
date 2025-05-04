@@ -11,6 +11,7 @@ const getUsersSeed = (count: number, seed?: number) => {
       lastName: "Min",
       email: "admin@syt.com",
       password: "Admin123*",
+      role: "admin" as "admin" | undefined,
     },
   ];
 
@@ -26,6 +27,7 @@ const getUsersSeed = (count: number, seed?: number) => {
       lastName,
       email,
       password,
+      role: undefined,
     });
   }
 

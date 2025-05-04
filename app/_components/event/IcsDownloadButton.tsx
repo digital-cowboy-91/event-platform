@@ -31,7 +31,7 @@ export default function IcsDownloadButton({ eventId }: Props) {
       onClick={downloadHandler_workaround}
       disabled={isProcessing}
     >
-      Download Event
+      Add To Calendar
     </Button>
   );
 }

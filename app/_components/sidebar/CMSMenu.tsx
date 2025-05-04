@@ -10,11 +10,11 @@ export default function CMSMenu() {
           href: "/cms/events",
           iconName: "streamline:blank-calendar",
         },
-        {
-          name: "TODO: Users",
-          href: "/cms/users",
-          iconName: "streamline:user-multiple-group",
-        },
+        // {
+        //   name: "TODO: Users",
+        //   href: "/cms/users",
+        //   iconName: "streamline:user-multiple-group",
+        // },
       ]}
     />
   );

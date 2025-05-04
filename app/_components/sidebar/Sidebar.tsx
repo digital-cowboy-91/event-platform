@@ -8,7 +8,7 @@ import SessionButton from "./SessionButton";
 import UserMenu from "./UserMenu";
 
 export default async function Sidebar() {
-  const { isAuthenticated, user } = await getAuthedPermission();
+  const { isAuthenticated, isAdmin, user } = await getAuthedPermission();
 
   if (!isAuthenticated)
     return (
@@ -35,7 +35,7 @@ export default async function Sidebar() {
             </VisuallyHidden>
             <SessionButton email={user?.email} />
             <UserMenu />
-            <CMSMenu />
+            {isAdmin && <CMSMenu />}
           </aside>
         </Dialog.Content>
       </Dialog.Portal>

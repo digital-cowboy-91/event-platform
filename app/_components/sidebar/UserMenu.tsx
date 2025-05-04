@@ -6,7 +6,7 @@ export default function UserMenu() {
       title="User"
       items={[
         {
-          name: "TODO: Profile",
+          name: "Profile",
           href: "/my/profile",
           iconName: "streamline:user-profile-focus",
         },

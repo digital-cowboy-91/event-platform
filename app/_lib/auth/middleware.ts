@@ -32,8 +32,30 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user && !request.nextUrl.pathname.startsWith("/login")) {
-    // no user, potentially respond by redirecting the user to the login page
+  const isAdmin = user?.app_metadata?.role === "admin";
+  const isAuthenticated = !!user;
+
+  const { pathname } = request.nextUrl;
+
+  if (pathname.startsWith("/login") && isAuthenticated) {
+    if (isAdmin) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/cms/events";
+      return NextResponse.redirect(url);
+    }
+
+    const url = request.nextUrl.clone();
+    url.pathname = "/my/profile";
+    return NextResponse.redirect(url);
+  }
+
+  if (pathname.startsWith("/cms") && !isAdmin) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    return NextResponse.redirect(url);
+  }
+
+  if (pathname.startsWith("/my") && !isAuthenticated) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);

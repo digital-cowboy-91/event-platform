@@ -9,6 +9,8 @@ interface Args {
 const publicImageLoader = ({ src }: Args) =>
   src === "#"
     ? "https://placehold.co/1200x800/png?text=NO+IMAGE"
+    : src.startsWith("http")
+    ? src
     : `${getEnvVars().SUPABASE_URL}/storage/v1/object/public/${src}`;
 
 export default publicImageLoader;

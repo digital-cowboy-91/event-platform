@@ -1,5 +1,7 @@
+import { createClient } from "@supabase/supabase-js";
 import { reset } from "drizzle-seed";
 import createServerClient from "../../supabase/utils/createServerClient";
+import getEnvVars from "../../supabase/utils/getEnvVars";
 import db from "../instance";
 import eventsTable from "../schema/events.schema";
 import profileTable from "../schema/profile.schema";
@@ -38,6 +40,21 @@ const seed = async () => {
       firstName: user.firstName,
       lastName: user.lastName,
     });
+
+    if (user.role === "admin") {
+      const sbAdmin = createClient(
+        getEnvVars().SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_KEY!
+      );
+
+      try {
+        await sbAdmin.auth.admin.updateUserById(auth.data.user.id, {
+          app_metadata: { role: "admin" },
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    }
   }
 
   // Events

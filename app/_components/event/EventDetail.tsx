@@ -31,7 +31,7 @@ export default function EventDetail({ event }: Props) {
         <Flex direction={"column"}>
           <Text>{new Date(event.startTime).toLocaleString("en-GB")}</Text>
           <Text>{event.location}</Text>
-          <Text>Attendance 0/{event.capacity}, 0 considering</Text>
+          <Text>Attendance 0/{event.capacity}</Text>
         </Flex>
       </Card>
       <Flex justify={"end"} gap={"3"}>

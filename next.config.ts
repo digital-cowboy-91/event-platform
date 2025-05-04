@@ -16,7 +16,18 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       new URL("https://placehold.co/**"),
       new URL(getEnvVars().SUPABASE_URL + "/storage/v1/object/public/media/**"),
+      new URL("https://picsum.photos/**"),
     ],
+  },
+
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/events",
+        permanent: true,
+      },
+    ];
   },
 };
 

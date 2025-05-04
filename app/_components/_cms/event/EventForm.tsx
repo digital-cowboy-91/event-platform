@@ -193,7 +193,7 @@ export default function EventForm({ modify }: Props) {
         <Flex justify={"between"}>
           {modify?.id && (
             <Button
-              variant="soft"
+              variant="outline"
               color="crimson"
               onClick={() => handleDelete(modify.id)}
               disabled={isDeleting || form.state.isSubmitting}
