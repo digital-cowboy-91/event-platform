@@ -1,5 +1,7 @@
 "use server";
 
+import insertProfile from "../../db/model/profiles/insertProfile";
+import { ProfileFormValidationSchema } from "../../db/schema/profile.schema";
 import createServerClient from "../../supabase/utils/createServerClient";
 import unires from "../../unires/unires";
 import {
@@ -10,13 +12,24 @@ import {
 const signUpWithEmail = async (creds: SignUpWithEmail) =>
   unires(async (signalError) => {
     const supabase = await createServerClient();
-    const parsedCreds = SignUpWithEmailSchema.parse(creds);
+    const _creds = SignUpWithEmailSchema.parse(creds);
 
-    const { error } = await supabase.auth.signUp(parsedCreds);
+    const auth = await supabase.auth.signUp(_creds);
 
-    if (error) {
-      return signalError();
+    if (auth.error) {
+      return signalError(auth.error);
     }
+
+    if (!auth.data.user?.id) {
+      return signalError({
+        message: "Something went wrong, user was not created",
+      });
+    }
+
+    await insertProfile(
+      auth.data.user?.id,
+      ProfileFormValidationSchema.parse(_creds)
+    );
 
     return {};
   });

@@ -1,1 +1,0 @@
-CREATE VIEW "public"."tickets_view" AS (select "tickets"."id", "tickets"."event_id", "tickets"."user_id", "events"."title", "events"."location", "events"."start_time", "events"."duration", "events"."price" from "tickets" full join "events" on "tickets"."event_id" = "events"."id");

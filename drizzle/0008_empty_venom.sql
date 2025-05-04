@@ -1,2 +1,0 @@
-DROP VIEW "public"."tickets_view";--> statement-breakpoint
-CREATE VIEW "public"."tickets_view" AS (select "tickets"."id", "tickets"."event_id", "tickets"."user_id", "events"."title", "events"."location", "events"."start_time", "events"."duration", "events"."price" from "tickets" left join "events" on "tickets"."event_id" = "events"."id");

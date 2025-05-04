@@ -4,9 +4,10 @@ import signInWithEmail from "@/app/_lib/auth/controller/signInWithEmail.action";
 import { SignInWithEmailSchema } from "@/app/_lib/auth/controller/signInWithEmail.schema";
 import signUpWithEmail from "@/app/_lib/auth/controller/signUpWithEmail.action";
 import { SignUpWithEmailSchema } from "@/app/_lib/auth/controller/signUpWithEmail.schema";
-import { Button, Flex, Heading, TextField } from "@radix-ui/themes";
+import { Button, Flex, Heading, Text, TextField } from "@radix-ui/themes";
 import { useForm } from "@tanstack/react-form";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Label } from "radix-ui";
 import { useMemo, useState } from "react";
 import InputError from "../form/InputError";
 
@@ -14,6 +15,8 @@ export default function SignInUp() {
   const [newUser, setNewUser] = useState(false);
   const router = useRouter();
   const redirect = useSearchParams().get("redirect");
+
+  console.log("rerender");
 
   const config = useMemo(
     () =>
@@ -25,6 +28,8 @@ export default function SignInUp() {
             submitLabel: "Sign Up",
             form: {
               defaultValues: {
+                firstName: "",
+                lastName: "",
                 email: "",
                 password: "",
                 confirmPassword: "",
@@ -59,7 +64,7 @@ export default function SignInUp() {
           return;
         }
 
-        router.replace(redirect ? redirect : "/my");
+        router.replace(redirect ? redirect : "/my/profile");
       });
     },
   });
@@ -74,50 +79,80 @@ export default function SignInUp() {
     >
       <Flex gap={"3"} direction={"column"}>
         <Heading mb="6">{config.title}</Heading>
+        {config.isNew && (
+          <>
+            <form.Field
+              name="firstName"
+              children={(field) => (
+                <Label.Root>
+                  <Text>First Name</Text>
+                  <TextField.Root
+                    value={field.state.value}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+                  <InputError error={field.state.meta.errors[0]} />
+                </Label.Root>
+              )}
+            />
+            <form.Field
+              name="lastName"
+              children={(field) => (
+                <Label.Root>
+                  <Text>Last Name</Text>
+                  <TextField.Root
+                    value={field.state.value}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                  />
+                  <InputError error={field.state.meta.errors[0]} />
+                </Label.Root>
+              )}
+            />
+          </>
+        )}
         <form.Field
           name="email"
           children={(field) => (
-            <>
+            <Label.Root>
+              <Text>Email</Text>
               <TextField.Root
-                placeholder="Email"
+                type="email"
                 value={field.state.value}
                 onChange={(e) => field.handleChange(e.target.value)}
               />
               <InputError error={field.state.meta.errors[0]} />
-            </>
+            </Label.Root>
           )}
         />
         <form.Field
           name="password"
           children={(field) => (
-            <>
+            <Label.Root>
+              <Text>Password</Text>
               <TextField.Root
-                placeholder="Password"
                 type="password"
                 value={field.state.value}
                 onChange={(e) => field.handleChange(e.target.value)}
               />
               <InputError error={field.state.meta.errors[0]} />
-            </>
+            </Label.Root>
           )}
         />
         {config.isNew && (
           <form.Field
             name="confirmPassword"
             children={(field) => (
-              <>
+              <Label.Root>
+                <Text>Confirm Password</Text>
                 <TextField.Root
-                  placeholder="Confirm Password"
                   type="password"
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
                 />
                 <InputError error={field.state.meta.errors[0]} />
-              </>
+              </Label.Root>
             )}
           />
         )}
-
         <Flex justify={"end"} gap="3" mt={"6"}>
           <Button
             variant="soft"

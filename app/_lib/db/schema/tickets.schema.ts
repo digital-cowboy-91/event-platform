@@ -2,14 +2,14 @@ import { eq } from "drizzle-orm";
 import { pgTable, pgView, uuid } from "drizzle-orm/pg-core";
 import { id, timestamps } from "./column.helper";
 import eventsTable from "./events.schema";
-import usersTable from "./users.schema";
+import profileTable from "./profile.schema";
 
 const ticketsTable = pgTable("tickets", {
   ...id,
   eventId: uuid("event_id").references(() => eventsTable.id, {
     onDelete: "cascade",
   }),
-  userId: uuid("user_id").references(() => usersTable.id, {
+  userId: uuid("user_id").references(() => profileTable.uid, {
     onDelete: "cascade",
   }),
   createdAt: timestamps.createdAt,

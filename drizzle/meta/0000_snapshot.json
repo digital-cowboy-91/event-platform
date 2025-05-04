@@ -1,5 +1,5 @@
 {
-  "id": "1a3dfaee-a5c0-4f8b-a2c9-6027e65c5616",
+  "id": "acbbc02f-2ead-4064-98a1-2a0697a74f26",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -12,16 +12,17 @@
           "name": "id",
           "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
-        "updatedAt": {
-          "name": "updatedAt",
+        "updated_at": {
+          "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false
         },
-        "createdAt": {
-          "name": "createdAt",
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
@@ -45,8 +46,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "startTime": {
-          "name": "startTime",
+        "start_time": {
+          "name": "start_time",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true
@@ -55,7 +56,7 @@
           "name": "duration",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "default": 60
         },
         "capacity": {
@@ -71,6 +72,12 @@
           "primaryKey": false,
           "notNull": false,
           "default": 0
+        },
+        "cover_image": {
+          "name": "cover_image",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -81,57 +88,38 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.tickets": {
-      "name": "tickets",
+    "public.profile": {
+      "name": "profile",
       "schema": "",
       "columns": {
-        "id": {
-          "name": "id",
+        "uid": {
+          "name": "uid",
           "type": "uuid",
           "primaryKey": true,
           "notNull": true
         },
-        "eventId": {
-          "name": "eventId",
-          "type": "uuid",
+        "first_name": {
+          "name": "first_name",
+          "type": "varchar",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
-        "userId": {
-          "name": "userId",
-          "type": "uuid",
+        "last_name": {
+          "name": "last_name",
+          "type": "varchar",
           "primaryKey": false,
-          "notNull": false
-        },
-        "createdAt": {
-          "name": "createdAt",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
+          "notNull": true
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "tickets_eventId_events_id_fk": {
-          "name": "tickets_eventId_events_id_fk",
-          "tableFrom": "tickets",
-          "tableTo": "events",
-          "columnsFrom": [
-            "eventId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "tickets_userId_users_id_fk": {
-          "name": "tickets_userId_users_id_fk",
-          "tableFrom": "tickets",
+        "profile_uid_users_id_fk": {
+          "name": "profile_uid_users_id_fk",
+          "tableFrom": "profile",
           "tableTo": "users",
+          "schemaTo": "auth",
           "columnsFrom": [
-            "userId"
+            "uid"
           ],
           "columnsTo": [
             "id"
@@ -146,31 +134,66 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.users": {
-      "name": "users",
+    "public.tickets": {
+      "name": "tickets",
       "schema": "",
       "columns": {
         "id": {
           "name": "id",
           "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
-        "firstName": {
-          "name": "firstName",
-          "type": "varchar",
+        "event_id": {
+          "name": "event_id",
+          "type": "uuid",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
-        "lastName": {
-          "name": "lastName",
-          "type": "varchar",
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "tickets_event_id_events_id_fk": {
+          "name": "tickets_event_id_events_id_fk",
+          "tableFrom": "tickets",
+          "tableTo": "events",
+          "columnsFrom": [
+            "event_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "tickets_user_id_profile_uid_fk": {
+          "name": "tickets_user_id_profile_uid_fk",
+          "tableFrom": "tickets",
+          "tableTo": "profile",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "uid"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -183,7 +206,68 @@
   "sequences": {},
   "roles": {},
   "policies": {},
-  "views": {},
+  "views": {
+    "public.tickets_view": {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "location": {
+          "name": "location",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "start_time": {
+          "name": "start_time",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "duration": {
+          "name": "duration",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 60
+        },
+        "price": {
+          "name": "price",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
+        }
+      },
+      "definition": "select \"tickets\".\"id\", \"tickets\".\"event_id\", \"tickets\".\"user_id\", \"events\".\"title\", \"events\".\"location\", \"events\".\"start_time\", \"events\".\"duration\", \"events\".\"price\" from \"tickets\" left join \"events\" on \"tickets\".\"event_id\" = \"events\".\"id\"",
+      "name": "tickets_view",
+      "schema": "public",
+      "isExisting": false,
+      "materialized": false
+    }
+  },
   "_meta": {
     "columns": {},
     "schemas": {},

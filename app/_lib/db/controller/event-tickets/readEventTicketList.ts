@@ -17,8 +17,7 @@ const readEventTicketList = async () =>
   unires(async (signalError) => {
     const auth = await getAuthedPermission();
 
-    if (!auth.user || !auth.user.id)
-      return signalError({ message: "Unauthorized user" });
+    if (!auth.user?.id) return signalError({ message: "Unauthorized user" });
 
     const res = await selectEventTicketList(auth.user.id);
 

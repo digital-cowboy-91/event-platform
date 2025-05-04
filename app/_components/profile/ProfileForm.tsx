@@ -1,24 +1,19 @@
 "use client";
 
 import {
-  UserFormDefaultSchema,
-  UserFormValidationSchema,
-  UserRecord,
-} from "@/app/_lib/db/schema/users.schema";
+  ProfileFormDefaultSchema,
+  ProfileFormValidationSchema,
+} from "@/app/_lib/db/schema/profile.schema";
 import { Button, Flex, Text, TextField } from "@radix-ui/themes";
 import { useForm } from "@tanstack/react-form";
 import { Label } from "radix-ui";
 import InputError from "../form/InputError";
 
-interface Props {
-  userData: UserRecord;
-}
-
-export default function ProfileForm({ userData }: Props) {
+export default function ProfileForm() {
   const form = useForm({
-    defaultValues: UserFormDefaultSchema.safeParse(userData).data,
+    defaultValues: ProfileFormDefaultSchema.safeParse({}).data,
     validators: {
-      onSubmit: UserFormValidationSchema,
+      onSubmit: ProfileFormValidationSchema,
     },
     onSubmit: ({ value }) => {
       console.log({ value });

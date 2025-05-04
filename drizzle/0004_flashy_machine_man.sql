@@ -1,1 +1,0 @@
-ALTER TABLE "events" RENAME COLUMN "coverImage" TO "cover_image";

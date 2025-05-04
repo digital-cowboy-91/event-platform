@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "db:generate": "dotenvx run --env-file=.env.local drizzle-kit generate",
-    "db:migrate": "dotenvx run --env-file=.env.local drizzle-kit migrate"
+    "db:migrate": "dotenvx run --env-file=.env.local drizzle-kit migrate",
+    "db:reset": "npx supabase db reset --linked && dotenvx run --env-file=.env.local drizzle-kit migrate"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^1.40.0",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@faker-js/faker": "^9.7.0",
     "@iconify-icon/react": "^2.3.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
