@@ -15,6 +15,9 @@ export default function SignInUp() {
   const [newUser, setNewUser] = useState(false);
   const router = useRouter();
   const redirect = useSearchParams().get("redirect");
+  const [serverError, setServerError] = useState<{ message: string } | null>(
+    null
+  );
 
   const config = useMemo(
     () =>
@@ -56,14 +59,17 @@ export default function SignInUp() {
   const form = useForm({
     defaultValues: config.form.defaultValues,
     validators: { onSubmit: config.form.validator },
-    onSubmit: async ({ value }) =>
-      config.form.submitFn(value).then(({ success }) => {
-        if (!success) {
-          return;
+    onSubmit: async ({ value }) => {
+      setServerError(null);
+
+      return config.form.submitFn(value).then((res) => {
+        if (!res.success) {
+          return setServerError(res.error);
         }
 
         router.replace(redirect ? redirect : "/my/profile");
-      }),
+      });
+    },
   });
 
   return (
@@ -150,6 +156,7 @@ export default function SignInUp() {
             )}
           />
         )}
+        {serverError && <InputError error={serverError} />}
         <Flex justify={"end"} gap="3" mt={"6"}>
           <Button
             variant="soft"

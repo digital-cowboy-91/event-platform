@@ -15,7 +15,7 @@ const signInWithEmail = async (creds: SignInWithEmail) =>
     const { error } = await supabase.auth.signInWithPassword(parsedCreds);
 
     if (error) {
-      return signalError();
+      return signalError({ message: error.message });
     }
 
     return {};

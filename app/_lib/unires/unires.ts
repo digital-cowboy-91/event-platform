@@ -1,7 +1,7 @@
-type TError = { success: false; error: object };
+type TError = { success: false; error: { message: string } };
 type TSuccess<T> = { success: true } & Awaited<T>;
 
-const signalError = (error: object) => {
+const signalError = (error: { message: string }) => {
   throw {
     success: false,
     error,
