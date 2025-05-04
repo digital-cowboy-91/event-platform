@@ -1,5 +1,5 @@
 import unires from "../../../unires/unires";
-import selectEventById from "../../model/events/selectEventById";
+import readSingleEvent from "../../model/events/readSingleEvent";
 import { EventId } from "../../schema/events.schema";
 
 interface Args {
@@ -8,7 +8,7 @@ interface Args {
 
 const readEventById = async ({ id }: Args) =>
   unires(async (signalError) => {
-    const res = await selectEventById(id).then((res) => res[0]);
+    const res = await readSingleEvent(id).then((res) => res[0]);
 
     if (!res) signalError({ message: "Invalid Event ID" });
 

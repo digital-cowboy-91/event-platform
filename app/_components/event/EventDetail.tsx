@@ -31,12 +31,16 @@ export default function EventDetail({ event }: Props) {
         <Flex direction={"column"}>
           <Text>{new Date(event.startTime).toLocaleString("en-GB")}</Text>
           <Text>{event.location}</Text>
-          <Text>Attendance 0/{event.capacity}</Text>
+          <Text>
+            Attendance {event.attendance}/{event.capacity}
+          </Text>
         </Flex>
       </Card>
       <Flex justify={"end"} gap={"3"}>
         <IcsDownloadButton eventId={event.id} />
-        <GetTicketDialog eventId={event.id} price={event.price} />
+        {event.attendance < (event.capacity ?? Infinity) && (
+          <GetTicketDialog eventId={event.id} price={event.price} />
+        )}
       </Flex>
     </Flex>
   );
