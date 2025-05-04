@@ -34,6 +34,7 @@ export default function EventTicketCard({
           variant="ghost"
           mx="3"
           onClick={() => setToggleTickets(!toggleTickets)}
+          aria-label="Toggle Tickets"
         >
           <Icon
             icon={

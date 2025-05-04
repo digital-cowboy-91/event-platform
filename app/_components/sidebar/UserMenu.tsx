@@ -11,7 +11,7 @@ export default function UserMenu() {
           iconName: "streamline:user-profile-focus",
         },
         {
-          name: "TODO: Tickets",
+          name: "Tickets",
           href: "/my/tickets",
           iconName: "streamline:tickets",
         },
