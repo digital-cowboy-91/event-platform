@@ -1,4 +1,4 @@
-import type { EventListItem } from "@/app/_lib/db/controller/events/readEventList";
+import type { EventListItem } from "@/app/_lib/db/controller/events/getEvents";
 import { Grid } from "@radix-ui/themes";
 import EventCard from "./EventCard";
 

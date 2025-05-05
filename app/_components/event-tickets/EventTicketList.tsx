@@ -1,4 +1,4 @@
-import readEventTicketList from "@/app/_lib/db/controller/event-tickets/readEventTicketList";
+import readEventTicketList from "@/app/_lib/db/controller/event-tickets/getEventsTickets";
 import { Flex } from "@radix-ui/themes";
 import { use } from "react";
 import EventTicketCard from "./EventTicketCard";

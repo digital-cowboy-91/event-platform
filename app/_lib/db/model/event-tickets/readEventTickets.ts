@@ -2,7 +2,7 @@ import { sql } from "drizzle-orm";
 import db from "../../instance";
 import { ticketsView, TicketViewRecord } from "../../schema/tickets.schema";
 
-const selectEventTicketList = (userId: string) => {
+const readEventsTickets = (userId: string) => {
   //   const query = db
   //     .select()
   //     .from(ticketsView)
@@ -12,10 +12,10 @@ const selectEventTicketList = (userId: string) => {
 
   // Workaround for query above - drizzle issue https://github.com/drizzle-team/drizzle-orm/issues/3856
   const query = db.execute<TicketViewRecord>(
-    sql`select "id", "event_id" as "eventId", "user_id" as "userId", "title", "location", "start_time" as "startTime", "duration", "price" from ${ticketsView} where ${ticketsView.userId} = ${userId}`
+    sql`select "id", "event_id" as "eventId", "user_id" as "userId", "title", "location", "start_time" as "startTime", "duration", "price" from ${ticketsView} where ${ticketsView.userId} = ${userId} order by "start_time"`
   );
 
   return query;
 };
 
-export default selectEventTicketList;
+export default readEventsTickets;

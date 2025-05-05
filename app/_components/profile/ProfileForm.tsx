@@ -80,6 +80,7 @@ export default function ProfileForm({ profileData }: Props) {
           <Button
             disabled={form.state.isSubmitting}
             onClick={() => form.handleSubmit({ action: "update" })}
+            loading={form.state.isSubmitting}
           >
             Save
           </Button>

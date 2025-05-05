@@ -1,4 +1,4 @@
-import { EventTicket } from "@/app/_lib/db/controller/event-tickets/readEventTicketList";
+import { EventTicket } from "@/app/_lib/db/controller/event-tickets/getEventsTickets";
 import { Box, Flex } from "@radix-ui/themes";
 import QRCode from "react-qr-code";
 

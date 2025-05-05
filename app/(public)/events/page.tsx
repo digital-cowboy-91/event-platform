@@ -1,5 +1,5 @@
 import EventList from "@/app/_components/event/EventList";
-import getEventList from "@/app/_lib/db/controller/events/readEventList";
+import getEventList from "@/app/_lib/db/controller/events/getEvents";
 
 export default async function page() {
   // TODO: pagination

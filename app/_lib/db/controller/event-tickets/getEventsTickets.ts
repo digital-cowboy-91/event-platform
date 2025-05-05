@@ -1,6 +1,6 @@
 import getAuthedPermission from "@/app/_lib/auth/controller/getAuthedPermission.action";
 import unires from "@/app/_lib/unires/unires";
-import selectEventTicketList from "../../model/event-tickets/selectEventTicketList";
+import selectEventTicketList from "../../model/event-tickets/readEventTickets";
 
 type EventTicket = {
   id: string;
@@ -13,7 +13,7 @@ type EventTicket = {
   }[];
 };
 
-const readEventTicketList = async () =>
+const getEventsTickets = async () =>
   unires(async (signalError) => {
     const auth = await getAuthedPermission();
 
@@ -45,5 +45,5 @@ const readEventTicketList = async () =>
     return { eventTickets };
   });
 
-export default readEventTicketList;
+export default getEventsTickets;
 export type { EventTicket };

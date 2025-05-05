@@ -166,7 +166,10 @@ export default function SignInUp() {
           >
             {config.modeLabel}
           </Button>
-          <Button disabled={form.state.isSubmitting}>
+          <Button
+            disabled={form.state.isSubmitting}
+            loading={form.state.isSubmitting}
+          >
             {config.submitLabel}
           </Button>
         </Flex>

@@ -197,11 +197,17 @@ export default function EventForm({ modify }: Props) {
               color="crimson"
               onClick={() => handleDelete(modify.id)}
               disabled={isDeleting || form.state.isSubmitting}
+              loading={isDeleting}
             >
               Delete
             </Button>
           )}
-          <Button disabled={isDeleting || form.state.isSubmitting}>Save</Button>
+          <Button
+            disabled={isDeleting || form.state.isSubmitting}
+            loading={form.state.isSubmitting}
+          >
+            Save
+          </Button>
         </Flex>
       </form>
     </Flex>

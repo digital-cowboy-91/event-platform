@@ -1,6 +1,6 @@
 "use client";
 
-import { EventTicket } from "@/app/_lib/db/controller/event-tickets/readEventTicketList";
+import { EventTicket } from "@/app/_lib/db/controller/event-tickets/getEventsTickets";
 import composeEventDateTime from "@/app/_lib/utils/composeEventDateTime";
 import { Card, Flex, IconButton, Link, Text } from "@radix-ui/themes";
 import { useState } from "react";

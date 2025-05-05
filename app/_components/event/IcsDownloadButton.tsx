@@ -30,6 +30,7 @@ export default function IcsDownloadButton({ eventId }: Props) {
       variant="outline"
       onClick={downloadHandler_workaround}
       disabled={isProcessing}
+      loading={isProcessing}
     >
       Add To Calendar
     </Button>

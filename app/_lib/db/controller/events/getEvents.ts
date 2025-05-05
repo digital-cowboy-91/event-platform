@@ -1,7 +1,7 @@
 import unires from "../../../unires/unires";
-import selectEventList from "../../model/events/selectEventList";
+import selectEventList from "../../model/events/readEvents";
 
-const readEventList = async () =>
+const getEvents = async () =>
   unires(async (signalError) => {
     const res = await selectEventList();
 
@@ -13,9 +13,9 @@ const readEventList = async () =>
   });
 
 type EventListItem = Extract<
-  Awaited<ReturnType<typeof readEventList>>,
+  Awaited<ReturnType<typeof getEvents>>,
   { success: true }
 >["events"][0];
 
-export default readEventList;
+export default getEvents;
 export type { EventListItem };

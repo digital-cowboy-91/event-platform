@@ -1,6 +1,6 @@
 "use client";
 
-import { EventListItem } from "@/app/_lib/db/controller/events/readEventList";
+import { EventListItem } from "@/app/_lib/db/controller/events/getEvents";
 import composeEventDateTime from "@/app/_lib/utils/composeEventDateTime";
 import { Box, Card, Flex, Inset, Text } from "@radix-ui/themes";
 import Image from "next/image";
@@ -37,7 +37,7 @@ export default function EventCard({ event }: Props) {
             </Text>
             <Flex direction="column">
               <Text>{composeEventDateTime(event.startTime)}</Text>
-              <Text>{event.location}</Text>
+              <Text color="gray">{event.location}</Text>
             </Flex>
             <Text weight="regular">
               {event.price === 0 ? "Free" : "£" + event.price}

@@ -1,4 +1,5 @@
 import { EventItem } from "@/app/_lib/db/controller/events/readEventById";
+import composeEventDateTime from "@/app/_lib/utils/composeEventDateTime";
 import { Box, Card, Flex, Heading, Text } from "@radix-ui/themes";
 import Image from "next/image";
 import GetTicketDialog from "../tickets/get-ticket/GetTicketDialog";
@@ -29,9 +30,9 @@ export default function EventDetail({ event }: Props) {
       <Text as="p">{event.description}</Text>
       <Card>
         <Flex direction={"column"}>
-          <Text>{new Date(event.startTime).toLocaleString("en-GB")}</Text>
-          <Text>{event.location}</Text>
-          <Text>
+          <Text>{composeEventDateTime(event.startTime)}</Text>
+          <Text color="gray">{event.location}</Text>
+          <Text mt="3">
             Attendance {event.attendance}/{event.capacity}
           </Text>
         </Flex>

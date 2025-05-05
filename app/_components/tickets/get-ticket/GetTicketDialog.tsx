@@ -65,8 +65,8 @@ export default function GetTicketDialog({ eventId, price }: Props) {
         <Flex justify="between" align="center" mb="3">
           <Dialog.Title mb="0">{currentStep.title}</Dialog.Title>
           <Dialog.Close>
-            <IconButton variant="soft" color="crimson">
-              <Icon icon="akar-icons:cross" />
+            <IconButton variant="ghost" mx="3" color="crimson">
+              <Icon icon="akar-icons:cross" width="24px" />
             </IconButton>
           </Dialog.Close>
         </Flex>
