@@ -23,7 +23,7 @@ const uploadImage = async (
 
     const storage = await supabase.storage
       .from(PUBLIC_BUCKET)
-      .upload(`${path}/${_file.data.name}`, _file.data);
+      .upload(`${path}/${_file.data.name}`, _file.data, { upsert: false });
 
     if (storage.error) {
       return signalError(storage.error);

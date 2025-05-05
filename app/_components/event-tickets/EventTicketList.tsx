@@ -1,5 +1,6 @@
 import readEventTicketList from "@/app/_lib/db/controller/event-tickets/getEventsTickets";
-import { Flex } from "@radix-ui/themes";
+import { Button, Flex, Text } from "@radix-ui/themes";
+import Link from "next/link";
 import { use } from "react";
 import EventTicketCard from "./EventTicketCard";
 
@@ -12,9 +13,18 @@ export default function EventTicketList() {
 
   return (
     <Flex direction="column" gap="3">
-      {res.eventTickets.map((eventTicket) => (
-        <EventTicketCard key={eventTicket.id} eventTicket={eventTicket} />
-      ))}
+      {res.eventTickets.length === 0 ? (
+        <Flex direction="column" gap="3" mx="auto">
+          <Text>You have no Tickets, yet!</Text>
+          <Button variant="outline">
+            <Link href="/events">See our events</Link>
+          </Button>
+        </Flex>
+      ) : (
+        res.eventTickets.map((eventTicket) => (
+          <EventTicketCard key={eventTicket.id} eventTicket={eventTicket} />
+        ))
+      )}
     </Flex>
   );
 }

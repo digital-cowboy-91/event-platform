@@ -1,6 +1,6 @@
 "use server";
 
-import insertSingleProfile from "../../db/model/profiles/insertSingleProfile";
+import createSingleProfile from "../../db/model/profiles/createSingleProfile";
 import { ProfileFormValidationSchema } from "../../db/schema/profile.schema";
 import createServerClient from "../../supabase/utils/createServerClient";
 import unires from "../../unires/unires";
@@ -26,7 +26,7 @@ const signUpWithEmail = async (creds: SignUpWithEmail) =>
       });
     }
 
-    await insertSingleProfile(
+    await createSingleProfile(
       auth.data.user?.id,
       ProfileFormValidationSchema.parse(_creds)
     );

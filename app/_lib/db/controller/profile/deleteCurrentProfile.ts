@@ -5,7 +5,7 @@ import getEnvVars from "@/app/_lib/supabase/utils/getEnvVars";
 import unires from "@/app/_lib/unires/unires";
 import { createClient } from "@supabase/supabase-js";
 
-const dropCurrentProfile = async () =>
+const deleteCurrentProfile = async () =>
   unires(async (signalError) => {
     const auth = await getAuthedPermission();
 
@@ -22,4 +22,4 @@ const dropCurrentProfile = async () =>
     return {};
   });
 
-export default dropCurrentProfile;
+export default deleteCurrentProfile;

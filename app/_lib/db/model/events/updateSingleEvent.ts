@@ -5,7 +5,7 @@ import eventsTable, {
   EventInsertRecord,
 } from "../../schema/events.schema";
 
-const replaceEvent = (id: EventId, event: EventInsertRecord) =>
+const updateSingleEvent = (id: EventId, event: EventInsertRecord) =>
   db.update(eventsTable).set(event).where(eq(eventsTable.id, id)).returning();
 
-export default replaceEvent;
+export default updateSingleEvent;

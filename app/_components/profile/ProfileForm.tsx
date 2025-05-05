@@ -1,6 +1,6 @@
 "use client";
 
-import dropCurrentProfile from "@/app/_lib/db/controller/profile/dropCurrentProfile";
+import deleteCurrentProfile from "@/app/_lib/db/controller/profile/deleteCurrentProfile";
 import patchCurrentProfile from "@/app/_lib/db/controller/profile/patchCurrentProfile";
 import {
   ProfileFormDefaultSchema,
@@ -34,7 +34,7 @@ export default function ProfileForm({ profileData }: Props) {
     onSubmit: async ({ value, meta }) => {
       if (meta.action === "update") return patchCurrentProfile(value);
       if (meta.action === "delete")
-        return dropCurrentProfile().then((res) => {
+        return deleteCurrentProfile().then((res) => {
           if (res.success) {
             router.replace("/login");
           }

@@ -6,7 +6,7 @@ interface Args {
   id: EventId;
 }
 
-const readEventById = async ({ id }: Args) =>
+const getSingleEvent = async ({ id }: Args) =>
   unires(async (signalError) => {
     const res = await readSingleEvent(id).then((res) => res[0]);
 
@@ -16,9 +16,9 @@ const readEventById = async ({ id }: Args) =>
   });
 
 type EventItem = Extract<
-  Awaited<ReturnType<typeof readEventById>>,
+  Awaited<ReturnType<typeof getSingleEvent>>,
   { success: true }
 >["event"];
 
-export default readEventById;
+export default getSingleEvent;
 export type { EventItem };

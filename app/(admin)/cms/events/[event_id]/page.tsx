@@ -1,5 +1,5 @@
 import EventForm from "@/app/_components/_cms/event/EventForm";
-import getEvent from "@/app/_lib/db/controller/events/readEventById";
+import getEvent from "@/app/_lib/db/controller/events/getSingleEvent";
 
 interface Props {
   params: Promise<{ event_id: string }>;

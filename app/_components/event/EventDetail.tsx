@@ -1,4 +1,4 @@
-import { EventItem } from "@/app/_lib/db/controller/events/readEventById";
+import { EventItem } from "@/app/_lib/db/controller/events/getSingleEvent";
 import composeEventDateTime from "@/app/_lib/utils/composeEventDateTime";
 import { Box, Card, Flex, Heading, Text } from "@radix-ui/themes";
 import Image from "next/image";
@@ -39,7 +39,8 @@ export default function EventDetail({ event }: Props) {
       </Card>
       <Flex justify={"end"} gap={"3"}>
         <IcsDownloadButton eventId={event.id} />
-        {event.attendance < (event.capacity ?? Infinity) && (
+        {(event.attendance <= (event.capacity ?? 0) ||
+          event.capacity === 0) && (
           <GetTicketDialog eventId={event.id} price={event.price} />
         )}
       </Flex>

@@ -1,8 +1,8 @@
 "use client";
 
-import createEvent from "@/app/_lib/db/controller/events/createEvent.action";
-import deleteEvent from "@/app/_lib/db/controller/events/deleteEvent.action";
-import updateEvent from "@/app/_lib/db/controller/events/updateEvent.action";
+import deleteSingleEvent from "@/app/_lib/db/controller/events/deleteSingleEvent.action";
+import patchSingleEvent from "@/app/_lib/db/controller/events/patchSingleEvent.action";
+import createSingleEvent from "@/app/_lib/db/controller/events/postSingleEvent.action";
 import {
   EventFormDefaultSchema,
   EventFormValidationSchema,
@@ -33,12 +33,12 @@ export default function EventForm({ modify }: Props) {
     },
     onSubmit: async ({ value }) => {
       if (modify?.id) {
-        const res = await updateEvent(modify.id, value);
+        const res = await patchSingleEvent(modify.id, value);
         if (res.success) router.refresh();
         return;
       }
 
-      const res = await createEvent(value);
+      const res = await createSingleEvent(value);
       if (res.success) router.replace(`/cms/events/${res.event.id}`);
     },
   });
@@ -47,7 +47,7 @@ export default function EventForm({ modify }: Props) {
     async (id: EventId) => {
       try {
         setIsDeleting(true);
-        const res = await deleteEvent(id);
+        const res = await deleteSingleEvent(id);
         if (res.success) router.replace("/cms/events");
       } catch (e) {
         setIsDeleting(false);

@@ -1,6 +1,6 @@
 "use client";
 
-import createTicketBulk from "@/app/_lib/db/controller/tickets/createTicketBulk.action";
+import postTickets from "@/app/_lib/db/controller/tickets/postTickets";
 import { Box, Button, Flex, Grid, Text, TextField } from "@radix-ui/themes";
 import { useForm } from "@tanstack/react-form";
 import { Label } from "radix-ui";
@@ -19,7 +19,7 @@ export default function OptionsStep({ eventId, userId, onSuccess }: Props) {
     },
     onSubmit: async ({ value }) => {
       try {
-        const res = await createTicketBulk(eventId, userId, value.quantity);
+        const res = await postTickets(eventId, userId, value.quantity);
 
         if (res.success) return onSuccess();
       } catch {}

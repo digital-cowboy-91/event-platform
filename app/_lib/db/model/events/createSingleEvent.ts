@@ -1,7 +1,7 @@
 import db from "../../instance";
 import eventsTable, { EventInsertRecord } from "../../schema/events.schema";
 
-const insertEvent = (event: EventInsertRecord) =>
+const createSingleEvent = (event: EventInsertRecord) =>
   db.insert(eventsTable).values(event).returning();
 
-export default insertEvent;
+export default createSingleEvent;

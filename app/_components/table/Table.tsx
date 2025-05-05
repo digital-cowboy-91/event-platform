@@ -1,5 +1,6 @@
 "use client";
 
+import composeEventDateTime from "@/app/_lib/utils/composeEventDateTime";
 import { Table as _Table } from "@radix-ui/themes";
 
 type TColumn<T> = {
@@ -51,7 +52,7 @@ export default function Table<T extends { id: string }>({
                   justify = "end";
                   cellData = rawData as number;
                 } else if (column.renderAs === "date") {
-                  cellData = new Date(rawData as string).toUTCString();
+                  cellData = composeEventDateTime(rawData as Date);
                 } else if (column.renderAs === "currency") {
                   justify = "end";
                   cellData = new Intl.NumberFormat("en-GB", {

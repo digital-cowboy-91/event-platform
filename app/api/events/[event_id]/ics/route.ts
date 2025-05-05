@@ -1,4 +1,4 @@
-import readEventById from "@/app/_lib/db/controller/events/readEventById";
+import readEventById from "@/app/_lib/db/controller/events/getSingleEvent";
 import generateIcsFile from "@/app/_lib/ics/generateIcsFIle";
 
 export async function GET(

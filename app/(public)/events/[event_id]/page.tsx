@@ -1,5 +1,5 @@
 import EventDetail from "@/app/_components/event/EventDetail";
-import getEvent from "@/app/_lib/db/controller/events/readEventById";
+import getEvent from "@/app/_lib/db/controller/events/getSingleEvent";
 
 interface Props {
   params: Promise<{ event_id: string }>;

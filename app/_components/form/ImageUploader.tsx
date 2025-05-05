@@ -1,7 +1,7 @@
 import imageUpload from "@/app/_lib/storage/controller/uploadImage.action";
 import UploadImageSchema from "@/app/_lib/storage/controller/uploadImage.schema";
 import getEnvVars from "@/app/_lib/supabase/utils/getEnvVars";
-import { Box, Flex, Text } from "@radix-ui/themes";
+import { Box, Flex, Spinner, Text } from "@radix-ui/themes";
 import { Label } from "radix-ui";
 import { ChangeEvent, useCallback, useState } from "react";
 import { ZodError } from "zod";
@@ -77,7 +77,7 @@ export default function ImageUploader({ label, value, onChange }: Props) {
               justify="center"
               align="center"
             >
-              <Text> {uploading ? "Uploading..." : "Upload Image"}</Text>
+              <Text> {uploading ? <Spinner /> : "Upload Image"}</Text>
             </Flex>
           ) : (
             <img {...imgProps} className="w-full h-full object-contain" />
