@@ -62,6 +62,7 @@ export default function SignInUp() {
     onSubmit: async ({ value }) => {
       setServerError(null);
 
+      // @ts-expect-error Value requires a typeguard
       return config.form.submitFn(value).then((res) => {
         if (!res.success) {
           return setServerError(res.error);

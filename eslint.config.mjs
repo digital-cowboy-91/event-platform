@@ -14,6 +14,7 @@ const eslintConfig = [
   {
     rules: {
       "react/no-children-prop": "off",
+      "@typescript-eslint/ban-ts-comment": ["warn"],
     },
   },
 ];

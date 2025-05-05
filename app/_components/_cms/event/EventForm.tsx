@@ -51,6 +51,7 @@ export default function EventForm({ modify }: Props) {
         if (res.success) router.replace("/cms/events");
       } catch (e) {
         setIsDeleting(false);
+        console.error(e);
       }
     },
     [router]

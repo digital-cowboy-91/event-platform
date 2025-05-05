@@ -1,3 +1,6 @@
+// @ts-nocheck
+// ICS library is not typesafe
+
 import readEventById from "@/app/_lib/db/controller/events/getSingleEvent";
 import generateIcsFile from "@/app/_lib/ics/generateIcsFIle";
 

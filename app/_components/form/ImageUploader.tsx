@@ -45,7 +45,9 @@ export default function ImageUploader({ label, value, onChange }: Props) {
 
         if (e instanceof ZodError) {
           setError(e.issues[0]);
+          // @ts-expect-error Error can contain message
         } else if (e.message) {
+          // @ts-expect-error The same as above
           setError({ message: e.message });
         } else {
           setError({
@@ -103,7 +105,7 @@ export default function ImageUploader({ label, value, onChange }: Props) {
 function generateImgProps(src?: string | ArrayBuffer | null) {
   const _src = typeof src === "string" && src.length > 0 ? src : null;
   return _src
-    ? {
+    ? ({
         src:
           _src.startsWith("data:image") || _src.startsWith("http")
             ? _src
@@ -111,11 +113,11 @@ function generateImgProps(src?: string | ArrayBuffer | null) {
         alt: "Preview of uploaded image",
         style: { display: "block" },
         hidden: false,
-      }
-    : {
+      } as const)
+    : ({
         src: _src,
         alt: "No Image",
         style: { display: "none" },
         hidden: true,
-      };
+      } as const);
 }

@@ -9,7 +9,7 @@ const signOut = async () =>
     const { error } = await supabase.auth.signOut();
 
     if (error) {
-      return signalError();
+      return signalError({ message: error.message });
     }
 
     return {};
